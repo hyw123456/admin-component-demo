@@ -25,7 +25,7 @@ module.exports = {
                 }
             },
             '/api': {
-                target: 'http://apptest.tofire.cn:8085/zhiyou-mobile',
+                target: 'http://测试环境域名',
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
