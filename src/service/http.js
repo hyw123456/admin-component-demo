@@ -74,6 +74,7 @@ export function post(url, data = {}) {
                     }else if(!data[1].errorMsg){
                         Message.error(response.data.msg);
                     }
+                    reject(response.data);
                 }
 
 

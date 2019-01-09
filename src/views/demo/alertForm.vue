@@ -48,13 +48,34 @@
         mounted: function () {
         },
         methods: {
-            open: async function () {
-                const {form, close} = await this.$refs.alertForm.openAlert({name: '名字'}, {
+            open: function () {
+                // 第一个参数是 初始化表单数据，可不传, 第二个参数是各种配置项
+                this.$refs.alertForm.openAlert({name: '名字'}, {
                     labelWidth: '80px',
-                    closeOnClickModal: false
+                    closeOnClickModal: false,
+                    /**
+                     * 关闭之前
+                     * @param action  action 的值为'confirm', 'cancel'或'close'；
+                     * @param instance instance 为 MessageBox 实例，可以通过它访问实例上的属性和方法；
+                     * @param done done 用于关闭 MessageBox 实例
+                     * @param form form是表单的数据
+                     */
+                    beforeClose: function (action, instance, done, form) {
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true;
+                            instance.confirmButtonText = '执行中...';
+                            setTimeout(() => {
+                                done();
+                                setTimeout(() => {
+                                    instance.confirmButtonLoading = false;
+                                }, 300);
+                            }, 2000)
+                        } else {
+                            done();
+                        }
+                    }
                 });
-                this.$message(JSON.stringify(form));
-                close();
+
             }
         }
     }

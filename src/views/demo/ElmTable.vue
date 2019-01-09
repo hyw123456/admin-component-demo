@@ -77,10 +77,29 @@
             getList: async function () {
                 ({list: this.list} = await getList());
             },
-            handleClick:async function (e) {
-                const {form, close} = await this.$refs.alertForm.openAlert(e, {confirmButtonText: '修改'});
-                await updateItem(form, {successMsg:'修改成功'});
-                close();
+            handleClick: function (e) {
+                this.$refs.alertForm.openAlert(e, {
+                    beforeClose: async function (action, instance, done, e) {
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true;
+                            instance.confirmButtonText = '执行中...';
+                            try {
+                                await updateItem(e, {successMsg: '修改成功'});
+                                done();
+                            } finally {
+                                setTimeout(() => {
+                                    instance.confirmButtonText = '修改';
+                                    instance.confirmButtonLoading = false;
+                                }, 300);
+                            }
+                        } else {
+                            done();
+                        }
+
+                    }
+                });
+                //
+
             },
             handleLook: function (e) {
                 this.$refs.alertForm.openAlert(e, {showConfirmButton: false});
