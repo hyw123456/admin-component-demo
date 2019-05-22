@@ -20,3 +20,9 @@
         }
     }
 </script>
+<style lang="scss" scoped>
+    .home{
+        height: rem(100);
+        color: $color;
+    }
+</style>

@@ -10,9 +10,14 @@ module.exports = {
         // 开启 CSS source maps?
         sourceMap: false,
         // css预设器配置项
-        loaderOptions: {},
+        loaderOptions: {
+            sass: {
+                data: `
+          @import "@/utils/them.scss";
+        `
+            }
+        },
         // 启用 CSS modules for all css / pre-processor files.
-        modules: false
     },
     devServer: {
         proxy: {
@@ -25,7 +30,7 @@ module.exports = {
                 }
             },
             '/api': {
-                target: 'http://测试环境域名',
+                target: 'http://apptest.tofire.cn:8085/zhiyou-mobile',
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {

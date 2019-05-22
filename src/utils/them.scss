@@ -1,0 +1,5 @@
+$color: blue;
+
+@function rem($px) {
+  @return $px/12/2+rem;
+}
